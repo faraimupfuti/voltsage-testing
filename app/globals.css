@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{--blue:#1B17FF;--blue-deep:#14109E;--blue-navy:#0A0880;--ink:#0f172a;--ink2:#1e293b;--muted:#475569;--faint:#94a3b8;--border:#e2e8f0;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background-color:#ffffff;color:#0f172a;font-family:'Inter',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+.brand-text{background:linear-gradient(90deg,#1B17FF,#14109E 45%,#0A0880 75%,#0f172a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.brand-text-orange{background:linear-gradient(90deg,#1B17FF,#14109E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.brand-text-teal{background:linear-gradient(90deg,#0f172a,#1e293b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);transition:box-shadow .25s ease,transform .25s ease}
+.card:hover{box-shadow:0 8px 40px rgba(0,0,0,.10),0 2px 8px rgba(0,0,0,.05);transform:translateY(-3px)}
+.card-flat{background:#fff;border:1px solid #e2e8f0;border-radius:16px}
+.card-surface{background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#1B17FF;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.section-eyebrow::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,#1B17FF,#0f172a);border-radius:2px}
+.gradient-border{position:relative;border-radius:16px}
+.gradient-border::before{content:'';position:absolute;inset:-1.5px;border-radius:17px;background:linear-gradient(135deg,#1B17FF,#14109E,#0A0880,#0f172a);z-index:-1;opacity:0;transition:opacity .3s}
+.gradient-border:hover::before{opacity:1}
+.tool-input{width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;color:#0f172a;font-family:'JetBrains Mono',monospace;font-size:13.5px;transition:all .2s;outline:none}
+.tool-input:focus{border-color:#1B17FF;background:#fff;box-shadow:0 0 0 3px rgba(27,23,255,.12)}
+.tool-input option{background:#fff;color:#0f172a}
+select optgroup{background:#f1f5f9;color:#1B17FF;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+select optgroup option,select option{background:#fff;color:#0f172a;font-weight:400;font-size:13px}
+input[type="time"],input[type="time"].tool-input{min-width:92px;color:#0f172a;color-scheme:light}
+input[type="number"].tool-input,input[type="text"].tool-input,textarea.tool-input{color:#0f172a}
+.tab-active{background:rgba(27,23,255,.08);border-color:rgba(27,23,255,.5)!important;color:#1B17FF!important}
+.problem-card{border-left:3px solid transparent}
+.ring-svg{transform:rotate(-90deg)}.ring-track{fill:none;stroke:#e2e8f0;stroke-width:8}
+.ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,#1B17FF,#14109E);border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(27,23,255,.3);text-decoration:none}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,23,255,.4)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#1B17FF;background:transparent;border:1.5px solid #1B17FF;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-secondary:hover{background:#1B17FF;color:#fff;box-shadow:0 4px 14px rgba(27,23,255,.3)}
+.btn-teal{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,#0f172a,#1e293b);border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(15,23,42,.25);text-decoration:none}
+.btn-teal:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,23,42,.35)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.badge-teal{background:rgba(15,23,42,.06);color:#0f172a;border:1px solid rgba(15,23,42,.18)}
+.badge-orange{background:rgba(27,23,255,.08);color:#1B17FF;border:1px solid rgba(27,23,255,.22)}
+.bg-dots{background-color:#fff;background-image:radial-gradient(#e2e8f0 1px,transparent 1px);background-size:28px 28px}
+.bg-subtle{background-color:#f8fafc}
+.divider{height:1px;background:linear-gradient(90deg,transparent,#e2e8f0 20%,#e2e8f0 80%,transparent)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f8fafc}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+
+/* Animated flowing border — wraps the sizing tool panels */
+.tool-frame{position:relative;border-radius:20px;padding:2px;background:linear-gradient(90deg,#1B17FF,#312ECC,#14109E,#0A0880,#1B17FF);background-size:300% 100%;animation:border-flow 8s linear infinite;box-shadow:0 10px 40px rgba(27,23,255,.14)}
+.tool-frame-inner{background:#fff;border-radius:18px;overflow:hidden}
+@keyframes border-flow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+/* Shimmering brand gradient text, used automatically wherever .brand-text* appears */
+.brand-text,.brand-text-orange,.brand-text-teal{background-size:220% auto;animation:text-shimmer 7s ease-in-out infinite}
+@keyframes text-shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* Scroll-reveal, driven by the Reveal component */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,.7,.3,1),transform .7s cubic-bezier(.22,.7,.3,1)}
+.reveal-visible{opacity:1;transform:translateY(0)}
+
+/* Slow ambient pulse for decorative background orbs */
+@keyframes orb-pulse{0%,100%{transform:scale(1) translateY(0);opacity:.9}50%{transform:scale(1.1) translateY(-14px);opacity:.6}}
+.orb-pulse{animation:orb-pulse 9s ease-in-out infinite}
+
+@media (prefers-reduced-motion: reduce){
+  .tool-frame,.brand-text,.brand-text-orange,.brand-text-teal,.reveal,.orb-pulse,.animate-float{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
