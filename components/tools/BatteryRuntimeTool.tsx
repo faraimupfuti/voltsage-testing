@@ -6,6 +6,8 @@ import { generateSizingReportPDF } from '@/lib/pdfReport'
 import { useLang } from '@/components/LanguageProvider'
 import { LeadLock } from '@/components/AccessGate'
 import TourGuide, { TourHandle, TourStep } from '@/components/TourGuide'
+import UseCaseStrip from '@/components/tools/UseCaseStrip'
+import { useReportDetails } from '@/components/tools/SiteTools'
 
 function RingGauge({ pct, color, label, value, unit }: { pct:number; color:string; label:string; value:string; unit:string }) {
   const R = 54, circ = 2 * Math.PI * R
@@ -39,10 +41,12 @@ export default function BatteryRuntimeTool() {
   const runtimePct = result.runtimeHours / 24
   const usablePct  = result.usableKWh / Math.max(capacity, 0.1)
   const [pdfBusy, setPdfBusy] = useState(false)
-  const downloadPDF = useCallback(async () => {
+  const report = useReportDetails()
+  const downloadPDF = useCallback(() => report.run(async client => {
     setPdfBusy(true)
     try {
       await generateSizingReportPDF({
+        preparedFor: client,
         toolName: 'Battery Runtime Report',
         subtitle: 'Usable energy and estimated backup runtime for the battery and load parameters entered below.',
         metrics: [
@@ -66,13 +70,13 @@ export default function BatteryRuntimeTool() {
         }],
       })
     } finally { setPdfBusy(false) }
-  }, [capacity, dod, eff, load, result])
+  }), [capacity, dod, eff, load, result, report.run])
 
   const sliders = [
-    { label:'Battery capacity', unit:'kWh', val:capacity, set:setCapacity, min:1, max:100, step:0.5, color:'#1B17FF' },
-    { label:'Depth of discharge (DoD)', unit:'%', val:dod, set:setDod, min:10, max:100, step:5, color:'#0f172a', hint:'Lithium = 80% · Lead-acid = 50%' },
-    { label:'Battery efficiency', unit:'%', val:eff, set:setEff, min:60, max:100, step:1, color:'#1e293b', hint:'Lithium = 95% · Lead-acid = 80–85%' },
-    { label:'Connected load', unit:'kW', val:load, set:setLoad, min:0.1, max:30, step:0.1, color:'#1B17FF', hint:'Everything switched on simultaneously' },
+    { label:'Battery capacity', unit:'kWh', val:capacity, set:setCapacity, min:1, max:100, step:0.5, color:'#2621FF' },
+    { label:'Depth of discharge (DoD)', unit:'%', val:dod, set:setDod, min:10, max:100, step:5, color:'#0B1220', hint:'Lithium = 80% · Lead-acid = 50%' },
+    { label:'Battery efficiency', unit:'%', val:eff, set:setEff, min:60, max:100, step:1, color:'#1A2030', hint:'Lithium = 95% · Lead-acid = 80–85%' },
+    { label:'Connected load', unit:'kW', val:load, set:setLoad, min:0.1, max:30, step:0.1, color:'#2621FF', hint:'Everything switched on simultaneously' },
   ]
 
   const tourRef = useRef<TourHandle>(null)
@@ -91,15 +95,25 @@ export default function BatteryRuntimeTool() {
     <section id="battery" className="py-24 bg-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-2xl mb-10">
-          <div className="section-eyebrow">Free tool — Battery Runtime</div>
-          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink uppercase leading-tight mb-4">
-            Battery Runtime<br /><span className="brand-text-orange">Calculator</span>
+          <div className="section-eyebrow">Premium tool — Battery Runtime</div>
+          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink leading-tight mb-4">
+            Battery Runtime<br /><span className="brand-text-orange">Assessment</span>
           </h2>
           <p className="text-ink-muted text-base leading-relaxed">
             How long will your battery actually last? Enter the battery size, depth of discharge,
-            efficiency and the load you plan to run. Get the exact hours of backup — before you buy.
+            efficiency and the load you plan to run. This quick battery assessment gives you the exact hours of backup — before you buy.
           </p>
         </div>
+
+        <UseCaseStrip
+          audience="Anyone buying, comparing or already running a battery who wants a realistic backup-time number"
+          useCases={[
+            'Checking a battery quote\'s advertised capacity against what you\'ll actually get at your load',
+            'Deciding between battery sizes/chemistries by comparing real runtime, not just kWh on a spec sheet',
+            'Planning load-shedding backup — how many hours a battery covers your fridge, lights and router',
+            'Sanity-checking an installer\'s battery recommendation before you commit to a purchase',
+          ]}
+        />
 
         <div className="tool-frame">
         <div className="card-flat tool-frame-inner" data-tour="batt-card">
@@ -149,8 +163,8 @@ export default function BatteryRuntimeTool() {
 
               <LeadLock>
               <div className="flex flex-wrap justify-center gap-10 mb-10" data-tour="batt-gauges">
-                <RingGauge pct={runtimePct} color="#1B17FF" label="Runtime at this load" value={result.runtimeHours >= 24 ? '24+' : result.runtimeHours.toFixed(1)} unit="hours" />
-                <RingGauge pct={usablePct}  color="#0f172a" label="Usable energy"        value={result.usableKWh.toFixed(2)} unit="kWh" />
+                <RingGauge pct={runtimePct} color="#2621FF" label="Runtime at this load" value={result.runtimeHours >= 24 ? '24+' : result.runtimeHours.toFixed(1)} unit="hours" />
+                <RingGauge pct={usablePct}  color="#0B1220" label="Usable energy"        value={result.usableKWh.toFixed(2)} unit="kWh" />
               </div>
 
               {/* Formula */}
@@ -159,9 +173,9 @@ export default function BatteryRuntimeTool() {
                 <div className="space-y-2 font-mono text-xs text-ink-muted">
                   <div className="flex justify-between"><span>Rated capacity</span><span className="text-ink font-semibold">{capacity} kWh</span></div>
                   <div className="flex justify-between"><span>× DoD ({dod}%)</span><span className="text-ink font-semibold">{(capacity*dod/100).toFixed(2)} kWh</span></div>
-                  <div className="flex justify-between"><span>× efficiency ({eff}%)</span><span className="font-bold" style={{ color:'#0f172a' }}>{result.usableKWh.toFixed(2)} kWh usable</span></div>
+                  <div className="flex justify-between"><span>× efficiency ({eff}%)</span><span className="font-bold" style={{ color:'#0B1220' }}>{result.usableKWh.toFixed(2)} kWh usable</span></div>
                   <div className="h-px bg-surface-border my-1" />
-                  <div className="flex justify-between"><span>÷ load ({load.toFixed(1)} kW)</span><span className="font-bold" style={{ color:'#1B17FF' }}>{result.runtimeHours.toFixed(1)} hours</span></div>
+                  <div className="flex justify-between"><span>÷ load ({load.toFixed(1)} kW)</span><span className="font-bold" style={{ color:'#2621FF' }}>{result.runtimeHours.toFixed(1)} hours</span></div>
                 </div>
               </div>
 
@@ -180,6 +194,7 @@ export default function BatteryRuntimeTool() {
                   </div>
                 ))}
               </div>
+              {report.form}
               <button onClick={downloadPDF} disabled={pdfBusy} data-tour="batt-pdf" className="w-full btn-teal justify-center disabled:opacity-40 disabled:cursor-not-allowed">{pdfBusy?<Loader2 size={13} className="animate-spin"/>:<FileDown size={13}/>} {t.toolsCommon.downloadPdf}</button>
               </LeadLock>
 
@@ -199,7 +214,7 @@ export default function BatteryRuntimeTool() {
           ].map((c,i)=>(
             <div key={i} className="card p-5">
               <div className="text-brand-teal mb-3">{c.icon}</div>
-              <h4 className="font-disp font-bold text-base uppercase text-ink mb-2">{c.title}</h4>
+              <h4 className="font-disp font-bold text-base text-ink mb-2">{c.title}</h4>
               <p className="text-ink-muted text-sm">{c.body}</p>
             </div>
           ))}

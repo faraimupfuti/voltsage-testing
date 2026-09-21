@@ -175,7 +175,7 @@ export default function ArticlesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-2xl mb-12">
           <div className="section-eyebrow">VoltSage Learn</div>
-          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink uppercase leading-tight mb-4">
+          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink leading-tight mb-4">
             Read before you<br /><span className="brand-text">talk to any installer</span>
           </h2>
           <p className="text-ink-muted text-base">
@@ -188,7 +188,7 @@ export default function ArticlesSection() {
               <button onClick={() => setOpen(open===i?null:i)} className="w-full flex items-center justify-between px-6 py-5 text-left gap-4 group">
                 <div className="flex items-center gap-4 min-w-0">
                   <span className="badge badge-teal flex-shrink-0">{a.tag}</span>
-                  <h3 className="font-disp font-bold text-lg text-ink uppercase group-hover:text-brand-teal transition-colors leading-tight">{a.title}</h3>
+                  <h3 className="font-disp font-bold text-lg text-ink group-hover:text-brand-teal transition-colors leading-tight">{a.title}</h3>
                 </div>
                 <ChevronDown size={18} className={`flex-shrink-0 text-ink-faint transition-transform duration-300 ${open===i?'rotate-180':''}`} />
               </button>

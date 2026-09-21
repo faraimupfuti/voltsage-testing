@@ -23,12 +23,12 @@ export default function FoundersPage() {
       <Header />
       <main className="bg-white overflow-hidden">
         <section className="relative pt-32 pb-24 max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="absolute top-10 right-0 w-[420px] h-[420px] rounded-full pointer-events-none orb-pulse" style={{background:'radial-gradient(circle,rgba(27,23,255,0.06) 0%,transparent 70%)'}}/>
-          <div className="absolute bottom-0 left-0 w-[320px] h-[320px] rounded-full pointer-events-none orb-pulse" style={{background:'radial-gradient(circle,rgba(15,23,42,0.06) 0%,transparent 70%)',animationDelay:'2s'}}/>
+          <div className="absolute top-10 right-0 w-[420px] h-[420px] rounded-full pointer-events-none orb-pulse" style={{background:'radial-gradient(circle,rgba(38,33,255,0.06) 0%,transparent 70%)'}}/>
+          <div className="absolute bottom-0 left-0 w-[320px] h-[320px] rounded-full pointer-events-none orb-pulse" style={{background:'radial-gradient(circle,rgba(11,18,32,0.06) 0%,transparent 70%)',animationDelay:'2s'}}/>
 
           <Reveal>
             <div className="section-eyebrow justify-center text-center mx-auto">Leadership</div>
-            <h1 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink uppercase leading-tight text-center mb-16">Meet the <span className="brand-text">Founder</span></h1>
+            <h1 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink leading-tight text-center mb-16">Meet the <span className="brand-text">Founder</span></h1>
           </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-10 lg:gap-16 items-start">
@@ -49,7 +49,7 @@ export default function FoundersPage() {
 
               <p className="text-base text-ink-muted leading-relaxed mb-4">
                 Nyasha Mpofu is the founder of VoltSage and an Electrical Engineer. She started VoltSage to
-                close the gap between what solar buyers are told and what the numbers actually say — building free,
+                close the gap between what solar buyers are told and what the numbers actually say — building premium,
                 engineering-led tools that size a system correctly <em className="not-italic text-ink font-medium">before</em> a
                 single panel is bought, not after.
               </p>

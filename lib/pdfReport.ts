@@ -29,10 +29,16 @@ async function loadLogoDataUrl(): Promise<string | null> {
 
 export interface ReportMetric { label: string; value: string; unit?: string }
 export interface ReportTable { title: string; head: string[]; body: (string | number)[][] }
+export interface ReportClient { name: string; company: string; location: string }
 export interface SizingReportOptions {
   toolName: string
   subtitle: string
+  /** Solar-resource region used for the PSH value (table entry or detected place) */
   location?: string
+  /** Peak sun hours used in the calculation, shown next to `location` */
+  psh?: number
+  /** Who the report is for — printed in a "Prepared for" block under the title */
+  preparedFor?: ReportClient
   mode?: 'standard' | 'advanced'
   metrics: ReportMetric[]
   highlight?: string
@@ -40,6 +46,26 @@ export interface SizingReportOptions {
   chartCaption?: string
   tables?: ReportTable[]
   disclaimer?: string
+}
+
+/**
+ * jsPDF's built-in Helvetica only covers Latin-1. Strip anything outside that
+ * (after trying to fold accents away) so user-typed text can never break the PDF.
+ */
+const EXTRA_LATIN: Record<string, string> = { 'Ł': 'L', 'ł': 'l', 'Đ': 'D', 'đ': 'd', 'ı': 'i', 'Ő': 'O', 'ő': 'o', 'Ű': 'U', 'ű': 'u', 'Œ': 'OE', 'œ': 'oe', 'Ş': 'S', 'ş': 's', 'Ğ': 'G', 'ğ': 'g', 'İ': 'I', 'Ș': 'S', 'ș': 's', 'Ț': 'T', 'ț': 't' }
+
+export function pdfSafe(input: unknown, max = 200): string {
+  const raw = String(input ?? '').replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-')
+  let out = ''
+  for (const ch of raw.normalize('NFC')) {
+    const c = ch.codePointAt(0) ?? 0
+    if (c < 32 || c === 127) { out += ' '; continue }
+    if (c <= 255) { out += ch; continue }
+    const folded = (EXTRA_LATIN[ch] ?? ch.normalize('NFD')).replace(/[\u0300-\u036f]/g, '')
+    if (!folded) continue // stray combining mark
+    out += folded.charCodeAt(0) <= 255 ? folded : '?'
+  }
+  return out.replace(/\s+/g, ' ').trim().slice(0, max)
 }
 
 export async function generateSizingReportPDF(opts: SizingReportOptions) {
@@ -94,10 +120,44 @@ export async function generateSizingReportPDF(opts: SizingReportOptions) {
   doc.text(subtitleLines, margin, y)
   y += subtitleLines.length * 12 + 6
 
+  // ---- Prepared-for block (name, company, site location) ----
+  if (opts.preparedFor) {
+    const pf = opts.preparedFor
+    const cols = [
+      { label: 'PREPARED FOR', value: pdfSafe(pf.name, 80) || '-', w: 0.28 },
+      { label: 'COMPANY', value: pdfSafe(pf.company, 100) || '-', w: 0.32 },
+      { label: 'SITE LOCATION', value: pdfSafe(pf.location, 120) || '-', w: 0.40 },
+    ]
+    const inner = pageW - margin * 2 - 24
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(10)
+    const wrapped = cols.map(c => doc.splitTextToSize(c.value, inner * c.w - 10) as string[])
+    const lines = Math.max(...wrapped.map(w => w.length))
+    const boxH = 30 + lines * 12
+    doc.setFillColor(...SURFACE)
+    doc.setDrawColor(...BORDER)
+    doc.setLineWidth(0.6)
+    doc.roundedRect(margin, y, pageW - margin * 2, boxH, 5, 5, 'FD')
+    let x = margin + 12
+    cols.forEach((c, i) => {
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(7)
+      doc.setTextColor(...INK_FAINT)
+      doc.text(c.label, x, y + 14)
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(10)
+      doc.setTextColor(...INK)
+      doc.text(wrapped[i], x, y + 28)
+      x += inner * c.w
+    })
+    y += boxH + 14
+  }
+
+  doc.setFont('helvetica', 'normal')
   doc.setFontSize(8.5)
   doc.setTextColor(...INK_FAINT)
   const metaBits: string[] = []
-  if (opts.location) metaBits.push(`Location: ${opts.location}`)
+  if (opts.location) metaBits.push(`Solar resource: ${pdfSafe(opts.location, 120)}${typeof opts.psh === 'number' && isFinite(opts.psh) ? ` (${opts.psh} PSH)` : ''}`)
   if (opts.mode) metaBits.push(`Mode: ${opts.mode === 'advanced' ? 'Advanced' : 'Standard'}`)
   if (metaBits.length) { doc.text(metaBits.join('   ·   '), margin, y); y += 14 }
   y += 14

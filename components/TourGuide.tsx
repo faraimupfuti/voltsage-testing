@@ -129,8 +129,8 @@ const TourGuide = forwardRef<TourHandle, TourGuideProps>(function TourGuide(
           style={{
             top: rect.top - PAD, left: rect.left - PAD,
             width: rect.width + PAD * 2, height: rect.height + PAD * 2,
-            border: '2px solid #1B17FF',
-            boxShadow: '0 0 0 4px rgba(27,23,255,0.15), 0 8px 24px rgba(27,23,255,0.2)',
+            border: '2px solid #2621FF',
+            boxShadow: '0 0 0 4px rgba(38,33,255,0.15), 0 8px 24px rgba(38,33,255,0.2)',
           }}
         />
       )}
@@ -146,7 +146,7 @@ const TourGuide = forwardRef<TourHandle, TourGuideProps>(function TourGuide(
         <div className="flex items-center justify-between gap-2">
           <div className="flex gap-1">
             {steps.map((_, i) => (
-              <span key={i} className="w-1.5 h-1.5 rounded-full transition-all" style={{ background: i === idx ? '#1B17FF' : '#e2e8f0' }} />
+              <span key={i} className="w-1.5 h-1.5 rounded-full transition-all" style={{ background: i === idx ? '#2621FF' : '#e2e8f0' }} />
             ))}
           </div>
           <div className="flex items-center gap-2">

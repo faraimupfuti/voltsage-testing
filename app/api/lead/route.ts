@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       console.error(`Lead webhook responded ${res.status}: ${bodyText.slice(0, 300)}`)
     }
   } catch (err) {
-    // A webhook hiccup shouldn't block someone from using the free tools —
+    // A webhook hiccup shouldn't block someone from using the premium tools —
     // log it and let the signup through.
     console.error('Lead webhook failed:', err)
   }

@@ -43,11 +43,11 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-2xl mb-12">
           <div className="section-eyebrow">Talk to us — after you've used the tools</div>
-          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink uppercase leading-tight mb-4">
+          <h2 className="font-disp font-extrabold text-4xl sm:text-5xl text-ink leading-tight mb-4">
             Come to us first.<br /><span className="brand-text">Buy with confidence.</span>
           </h2>
           <p className="text-ink-muted text-base leading-relaxed">
-            Use the free sizing tools above to get your numbers. Then reach out if you want an engineer to review a quote, refine your sizing, or design your system from scratch.
+            Use the premium assessment tools above to get your numbers. Then reach out if you want an engineer to review a quote, refine your sizing, or design your system from scratch.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export function ContactSection() {
             <div key={i} className="gradient-border rounded-2xl overflow-hidden">
               <div className="card-flat p-6 h-full flex flex-col">
                 <div className="text-[10px] font-mono uppercase tracking-widest text-brand-teal mb-1">{s.sub}</div>
-                <h3 className="font-disp font-bold text-xl text-ink uppercase mb-3">{s.name}</h3>
+                <h3 className="font-disp font-bold text-xl text-ink mb-3">{s.name}</h3>
                 <p className="text-ink-muted text-sm flex-1 mb-5">{s.desc}</p>
                 <button onClick={()=>setService(s.name)}
                   className={`w-full py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition-all ${service===s.name?'btn-primary justify-center':'btn-secondary justify-center'}`}>
@@ -71,7 +71,7 @@ export function ContactSection() {
         {/* Form + info */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <div className="card p-5 sm:p-8">
-            <h3 className="font-disp font-bold text-2xl text-ink uppercase mb-6">Send an enquiry</h3>
+            <h3 className="font-disp font-bold text-2xl text-ink mb-6">Send an enquiry</h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -112,18 +112,18 @@ export function ContactSection() {
 
           <div className="card p-8 flex flex-col justify-between">
             <div>
-              <h3 className="font-disp font-bold text-2xl text-ink uppercase mb-2">What VoltSage does</h3>
-              <p className="text-ink-muted text-sm mb-6">We help individuals and businesses understand exactly what solar system they need — before they spend any money. Our tools are free. Our advice is independent. We earn nothing from equipment sales.</p>
+              <h3 className="font-disp font-bold text-2xl text-ink mb-2">What VoltSage does</h3>
+              <p className="text-ink-muted text-sm mb-6">We help individuals and businesses understand exactly what solar system they need — before they spend any money. Our tools are premium, engineer-grade, and independent. We earn nothing from equipment sales.</p>
               <div className="space-y-4">
                 {[
-                  { label:'Use our tools first',        desc:'Free residential, agricultural and battery runtime tools — no sign-up, no cost, available right now.' },
+                  { label:'Use our tools first',        desc:'Premium residential, agricultural, battery and cable sizing tools — engineer-grade calculations, available right now.' },
                   { label:'Get informed, not sold to',  desc:'We explain your numbers in plain language so you understand what you\'re buying before you buy it.' },
                   { label:'Compare quotes confidently', desc:'Walk into any installer conversation knowing your required inverter size, battery and PV array.' },
                   { label:'No conflict of interest',    desc:'We never profit from equipment. Our only product is helping you make the right decision.' },
                 ].map((item,i)=>(
                   <div key={i} className="flex gap-3">
                     <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-white text-[9px] font-bold"
-                      style={{background:'linear-gradient(135deg,#1B17FF,#1e293b)'}}>✓</div>
+                      style={{background:'linear-gradient(135deg,#2621FF,#1A2030)'}}>✓</div>
                     <div>
                       <div className="font-mono text-xs font-bold text-ink uppercase tracking-wider">{item.label}</div>
                       <div className="text-ink-muted text-xs mt-0.5">{item.desc}</div>
@@ -148,45 +148,50 @@ export function ContactSection() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-surface-border py-12 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="panel-dark py-16">
+      <div className="trace-divider absolute top-0 left-0 right-0 -translate-y-full opacity-80">
+        <svg viewBox="0 0 1200 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 32 H500 L540 8 L580 56 L620 32 H1200" stroke="#2621FF" strokeWidth="1.5" className="trace-line" fill="none" opacity="0.55"/>
+        </svg>
+      </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <Image src="/logo.png" alt="VoltSage Solutions — free solar sizing tools" width={170} height={36} className="h-8 w-auto"/>
+              <Image src="/logo.png" alt="VoltSage Solutions — premium solar energy assessment & sizing tools" width={170} height={36} className="h-8 w-auto brightness-0 invert"/>
             </div>
-            <p className="text-ink-faint text-xs leading-relaxed max-w-xs">Use our free tools before you buy a solar system. Know your numbers. Make a confident decision. We sell no equipment — ever.</p>
+            <p className="text-white/45 text-xs leading-relaxed max-w-xs">Use our premium assessment tools before you buy a solar system. Know your numbers. Make a confident decision. We sell no equipment — ever.</p>
           </div>
           <div>
-            <h5 className="font-mono text-[10px] uppercase tracking-widest text-brand-teal mb-3">Free Tools</h5>
-            <ul className="space-y-2 text-xs text-ink-faint">
-              {[['Residential Sizing Tool','#sizing'],['Agricultural Sizing Tool','#agricultural'],['Battery Runtime Calculator','#battery']].map(([l,h])=>(
-                <li key={l}><a href={h} className="hover:text-ink-muted transition-colors">{l}</a></li>
+            <h5 className="font-mono text-[10px] uppercase tracking-widest text-[#8D88FF] mb-3">Premium Tools</h5>
+            <ul className="space-y-2 text-xs text-white/45">
+              {[['Residential Sizing Tool','#sizing'],['Agricultural Sizing Tool','#agricultural'],['Battery Runtime Calculator','#battery'],['DC Cable Sizing Tool','#dc-cable-sizing']].map(([l,h])=>(
+                <li key={l}><a href={h} className="hover:text-white/80 transition-colors">{l}</a></li>
               ))}
             </ul>
           </div>
           <div>
-            <h5 className="font-mono text-[10px] uppercase tracking-widest text-brand-orange mb-3">Services</h5>
-            <ul className="space-y-2 text-xs text-ink-faint">
+            <h5 className="font-mono text-[10px] uppercase tracking-widest text-[#E89A4A] mb-3">Services</h5>
+            <ul className="space-y-2 text-xs text-white/45">
               {['Ask a Voltsage Expert','Solar Quote Review','General Solar questions'].map(s=>(
-                <li key={s}><a href="/#contact" className="hover:text-ink-muted transition-colors">{s}</a></li>
+                <li key={s}><a href="/#contact" className="hover:text-white/80 transition-colors">{s}</a></li>
               ))}
             </ul>
           </div>
           <div>
-            <h5 className="font-mono text-[10px] uppercase tracking-widest text-brand-green mb-3">Learn</h5>
-            <ul className="space-y-2 text-xs text-ink-faint">
+            <h5 className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-3">Learn</h5>
+            <ul className="space-y-2 text-xs text-white/45">
               {['Why quotes vary','Surge demand explained','kW vs kVA','Battery technologies','Battery capacity','Solar vs generator'].map(a=>(
-                <li key={a}><a href="/#articles" className="hover:text-ink-muted transition-colors">{a}</a></li>
+                <li key={a}><a href="/#articles" className="hover:text-white/80 transition-colors">{a}</a></li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="border-t border-surface-border pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs font-mono text-ink-faint">© {new Date().getFullYear()} VoltSage Solutions Ltd · Preliminary sizing tools for planning purposes only — not a substitute for a detailed engineering assessment. · <a href="/network-design" className="underline hover:text-ink-muted transition-colors">Network Design</a> · <a href="/founders" className="underline hover:text-ink-muted transition-colors">Our Founder</a> · <a href="/privacy" className="underline hover:text-ink-muted transition-colors">Privacy Policy</a></p>
+        <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs font-mono text-white/35">© {new Date().getFullYear()} VoltSage Solutions Ltd · Preliminary sizing tools for planning purposes only — not a substitute for a detailed engineering assessment. · <a href="/founders" className="underline hover:text-white/70 transition-colors">Our Founder</a> · <a href="/privacy" className="underline hover:text-white/70 transition-colors">Privacy Policy</a></p>
           <div className="flex gap-4">
             {[<Linkedin size={16} key="li"/>,<Twitter size={16} key="tw"/>,<Facebook size={16} key="fb"/>].map((icon,i)=>(
-              <a key={i} href="#" className="text-ink-faint hover:text-brand-teal transition-colors">{icon}</a>
+              <a key={i} href="#" className="text-white/40 hover:text-white transition-colors">{icon}</a>
             ))}
           </div>
         </div>

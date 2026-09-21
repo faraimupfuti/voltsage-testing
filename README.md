@@ -17,6 +17,19 @@ npm install
 npm run dev   # → http://localhost:3000
 ```
 
+## Boujie (site chat assistant)
+Boujie is a chat widget (bottom-right, on every page) that answers questions about
+VoltSage and can run the same sizing/battery-runtime calculations as the free tools,
+via Claude tool-use — see `lib/boujie.ts`, `app/api/chat/route.ts`, `components/Boujie.tsx`.
+
+It needs an Anthropic API key to work:
+```bash
+cp .env.example .env.local
+# then set ANTHROPIC_API_KEY in .env.local (get one at https://console.anthropic.com)
+```
+Without a key set, the chat widget still renders but replies with a "not configured yet" message
+instead of erroring the whole site. `ANTHROPIC_MODEL` is optional and defaults to `claude-sonnet-5`.
+
 ## Deploy to GitHub
 ```bash
 git init
@@ -46,3 +59,10 @@ heroku create voltsage-light
 heroku stack:set container
 git push heroku main
 ```
+
+## Location, PSH and report details
+
+- `lib/geoPsh.ts` — browser geolocation → place name → PSH. Table entry if the country (or Zimbabwe province) is in `PSH_TABLE`; otherwise NASA POWER long-term irradiance for the exact coordinates; otherwise a latitude-based estimate. If device location is blocked it falls back to an approximate network (IP) lookup, then to the default location. No API keys required.
+- `components/SiteProvider.tsx` — shared detection state + the name / company / site-location captured for PDF reports (stored in the browser only).
+- `components/tools/SiteTools.tsx` — `usePshSelection`, `PshSelect`, `LocationStatus`, `useReportDetails` used by every sizing tool.
+- Geolocation requires HTTPS (or localhost).
