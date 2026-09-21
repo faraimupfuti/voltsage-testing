@@ -182,10 +182,13 @@ function ReportDetailsForm({ showErrors, error, rootRef }: { showErrors: boolean
  */
 export function useReportDetails() {
   const { t } = useLang()
-  const { details } = useSite()
+  const { details, detect } = useSite()
   const [showErrors, setShowErrors] = useState(false)
   const [error, setError] = useState('')
   const rootRef = useRef<HTMLDivElement>(null)
+
+  // Tools without a PSH selector (Battery Runtime, DC Cable) still need the location for the report.
+  useEffect(() => { detect() }, [detect])
 
   const run = useCallback(async (fn: (client: ReportClient) => Promise<void>) => {
     const c = cleanClient(details)

@@ -269,6 +269,10 @@ export async function generateSizingReportPDF(opts: SizingReportOptions) {
     doc.setFontSize(7.5)
     doc.setTextColor(...INK_FAINT)
     doc.text('VoltSage Solutions', margin, pageH - 24)
+    if (opts.preparedFor) {
+      const who = [opts.preparedFor.name, opts.preparedFor.company].map(v => pdfSafe(v, 60)).filter(Boolean).join(' - ')
+      if (who) doc.text(`Prepared for: ${who}`, pageW / 2, pageH - 24, { align: 'center' })
+    }
     doc.text(`Page ${i} of ${pageCount}`, pageW - margin, pageH - 24, { align: 'right' })
   }
 
